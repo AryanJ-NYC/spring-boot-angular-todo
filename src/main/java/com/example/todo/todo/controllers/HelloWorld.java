@@ -11,10 +11,13 @@ public class HelloWorld {
     public ResponseEntity<String> getHelloWorld(
         @PathVariable(name = "customString", required = false) String customString
     ) {
-        String responseString = "Hello, World!";
+        StringBuilder prefix = new StringBuilder("Hello, ");
+        String suffix = "!";
+        String body = "World";
         if (customString != null) {
-            responseString = customString;
+            body = customString;
         }
-        return ResponseEntity.ok(responseString);
+        String response = prefix.append(body).append(suffix).toString();
+        return ResponseEntity.ok(response);
     }
 }
