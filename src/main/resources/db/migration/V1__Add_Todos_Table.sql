@@ -3,6 +3,6 @@ create table Todos(
   description text not null,
   completed boolean default false,
   created timestamp not null,
-  lastUpdate timestamp not null,
+  last_update timestamp not null,
   primary key (id)
 );
