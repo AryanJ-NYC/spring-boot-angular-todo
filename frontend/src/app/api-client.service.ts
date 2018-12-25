@@ -7,6 +7,6 @@ export class ApiClientService {
   constructor(private httpClient: HttpClient) { }
 
   getHelloWorld(name = ''): Observable<string> {
-    return this.httpClient.get<string>(`/api/hello-world/${name}`, { responseType: 'text' });
+    return this.httpClient.get(`/api/hello-world/${name}`, { responseType: 'text' });
   }
 }
