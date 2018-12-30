@@ -1,0 +1,6 @@
+<form #form="ngForm">
+  <div ngModelGroup="todo">
+    <mat-checkbox name="isCompleted" ngModel>Check Me!</mat-checkbox>
+    <button mat-button (click)="handleClick()">Save</button>
+  </div>
+</form>
