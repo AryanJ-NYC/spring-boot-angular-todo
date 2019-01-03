@@ -17,11 +17,19 @@ export class TodoListComponent implements OnInit {
   }
 
   handleClick() {
+    const { isCompleted: completed, id } = this.todosForm.value.todo;
     const todo: Todo = {
-      completed: this.todosForm.value.todo.isCompleted,
+      completed,
+      id,
       description: 'Check Me!',
     };
-    this.apiClient.postTodo(todo).subscribe();
+    if (todo.id) {
+      this.apiClient.putTodo(todo).subscribe();
+    } else {
+      this.apiClient.postTodo(todo).subscribe(todoWithId => {
+        this.todosForm.form.get('todo.id').patchValue(todoWithId.id);
+      });
+    }
   }
 
 }

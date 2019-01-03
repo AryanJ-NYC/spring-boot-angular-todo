@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class TodoDto {
-    int id;
+    Long id;
     String description;
     boolean completed;
 }
