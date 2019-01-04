@@ -1,7 +1,12 @@
 <form #form="ngForm">
-  <div ngModelGroup="todo">
-    <input type="hidden" name="id" ngModel />
-    <mat-checkbox name="isCompleted" ngModel>Check Me!</mat-checkbox>
-    <button mat-button (click)="handleClick()">Save</button>
+  <div ngModelGroup="todos">
+    <div *ngFor="let todo of todos | async; let i = index;" [ngModelGroup]="i">
+      <input type="hidden" name="id" [ngModel]="todo.id" />
+      <mat-checkbox name="completed" [ngModel]="todo.completed"></mat-checkbox>
+      <mat-form-field>
+        <input placeholder="Todo name" name="description" [ngModel]="todo.description" matInput>
+      </mat-form-field>
+      <button type="submit" mat-button (click)="handleClick(i)">Save</button>
+    </div>
   </div>
 </form>

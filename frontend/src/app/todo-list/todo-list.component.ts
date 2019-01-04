@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ApiClientService } from '../api-client.service';
 import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { ApiClientService } from '../api-client.service';
 import { Todo } from '../shared/todo.model';
 
 @Component({
@@ -10,24 +11,21 @@ import { Todo } from '../shared/todo.model';
 })
 export class TodoListComponent implements OnInit {
   @ViewChild('form') todosForm: NgForm;
+  todos: Observable<Todo[]>;
 
   constructor(private readonly apiClient: ApiClientService) { }
 
   ngOnInit() {
+    this.todos = this.apiClient.getTodos();
   }
 
-  handleClick() {
-    const { isCompleted: completed, id } = this.todosForm.value.todo;
-    const todo: Todo = {
-      completed,
-      id,
-      description: 'Check Me!',
-    };
+  handleClick(todoIndex: number) {
+    const todo = this.todosForm.value.todos[todoIndex];
     if (todo.id) {
       this.apiClient.putTodo(todo).subscribe();
     } else {
       this.apiClient.postTodo(todo).subscribe(todoWithId => {
-        this.todosForm.form.get('todo.id').patchValue(todoWithId.id);
+        this.todosForm.form.get(`todo.${todoIndex}.id`).patchValue(todoWithId.id);
       });
     }
   }

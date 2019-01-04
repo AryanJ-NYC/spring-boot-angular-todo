@@ -11,8 +11,12 @@ export class ApiClientService {
     return this.httpClient.get(`/api/hello-world/${name}`, { responseType: 'text' });
   }
 
-  putTodo(todo: Todo) {
-    return this.httpClient.put('/api/todos', todo);
+  getTodos(): Observable<Todo[]> {
+    return this.httpClient.get<Todo[]>('api/todos');
+  }
+
+  putTodo(todo: Todo): Observable<Todo> {
+    return this.httpClient.put<Todo>(`/api/todos/${todo.id}`, todo);
   }
 
   postTodo(todo: Todo): Observable<Todo> {
